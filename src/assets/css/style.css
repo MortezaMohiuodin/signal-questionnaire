@@ -1,0 +1,174 @@
+/*
+Main css
+
+css list:
+===========================
+1:fonts 
+===========================
+2:typography css
+===========================
+3:reset 
+===========================
+4:form section
+===========================
+5:select2 reset
+===========================
+6:global classes
+===========================
+
+*/
+
+/*===================
+    1) fonts 
+=====================*/
+
+@font-face {
+    font-family: 'Yekan';
+    src: url('../fonts/Yekan/Yekan.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/Yekan/Yekan.woff') format('woff'), /* Modern Browsers */
+    url('../fonts/Yekan/Yekan.ttf') format('truetype'); /* Safari, Android, iOS */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*===================
+    2) typography 
+=====================*/
+
+body,h1,h2,h3,h4,h5,h6,p,span,button,div,a,li{
+    font-family: Yekan,sans-serif;
+}
+
+/*===================
+    3) reset 
+=====================*/
+
+body{
+    background-color: #f1f1f1;
+    direction: rtl;
+    text-align: right;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+li{
+    list-style-type: none;
+}
+
+a:hover{
+    color: black;
+}
+
+/*===================
+    4) form section 
+=====================*/
+
+input.form-control{
+    background: #f3f3f3;
+    border-radius: .5rem;
+    color: #8e8d8d;
+}
+
+select.custom-select{
+    border-radius: .5rem;
+    color: #8e8d8d;
+    background-color: #f3f3f3;
+}
+
+textarea.form-control{
+    border-radius: .5rem;
+    color: #8e8d8d;
+    background-color: #f3f3f3;
+}
+
+.errMessage{
+    color: #f22435;
+    font-size: .8rem;
+}
+
+button:focus{
+    outline: 0;
+    box-shadow: none!important;
+}
+
+.vue-star-rating{
+    justify-content: center;
+}
+
+/* .border-dot{
+    border: 1px dotted #02998d94;
+    border-radius: .5rem;
+} */
+
+.btn-float{
+    padding: 0;
+    display: inline-block;
+    background: none;
+    border: 0;
+    color: #ff4444b5;
+    position: absolute;
+    line-height: 19px;
+    z-index: 1;
+    right: 0px;
+    top: 50%;
+    transform: translate(0,-50%);
+}
+.btn-float:hover{
+    color: #ff4444;
+}
+
+/*===================
+    5) select2 reset
+=====================*/
+
+.vs__dropdown-toggle{
+    background: #f3f3f3!important;
+    padding: .2rem!important;
+    border-radius: .5rem!important;
+    border: 1px solid #ced4da!important;
+    cursor: pointer!important;
+}
+
+.v-select ul{
+    text-align: right;
+}
+
+.vs__actions{
+    cursor: pointer;
+}
+
+.vs__actions .vs__clear{
+    display: none;
+}
+
+/*===================
+   6) global classes
+=====================*/
+.text-light{
+    color: #f6fbfb;
+}
+
+.mw-300{
+    max-width: 300px;
+}
+
+.bg-color-row{
+    background-color: #efffdd;
+}
+
+/* .form-section{
+    margin-top: 40px;
+    margin-bottom: 100px;
+} */
+
+/* .form-buttons{
+    margin-top: 20px;
+} */
+/* .form-buttons{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+} */
