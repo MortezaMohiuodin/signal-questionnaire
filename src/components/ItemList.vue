@@ -2,7 +2,7 @@
   <div>
       <b-row>
           <b-col col>
-                <label for="" class="font-weight-bold">{{listName}}</label>
+                <label v-if="listName" for="" class="font-weight-bold">{{listName}}</label>
                 <b-input-group>
                     <b-form-input class="mw-300" v-on:keyup.enter="addItem()" v-model="item_input"></b-form-input>
                     <b-input-group-append>
@@ -64,7 +64,7 @@ ul{
     position: relative;
     display: inline-block;
     padding: .2rem 1rem;
-    background-color: #ded6d6;
+    background-color: #f1f1f1;
     margin: .2rem .5rem;
     border-radius: .2rem;
 }
@@ -73,7 +73,7 @@ ul{
     right: 0px;
     top: 0;
     cursor: pointer;
-    color: gray;
+    color: #00000038;
     transform: translate(50%,-50%);
     display: inline-block;
     width: 15px;
@@ -84,7 +84,7 @@ ul{
     font-size: 20px;
 }
 .tag__remove:hover{
-    color: black;
+    color: #6b6363;
 }
 .input-group input{
     border-radius: 0 .5rem .5rem 0!important;

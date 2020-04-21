@@ -20,9 +20,6 @@
 export default {
     name: 'navButtons',
     props:{
-        invalid:{
-            type:String,
-        },
         hidePrev:{
             type:Boolean,
             default:false
@@ -41,11 +38,12 @@ export default {
 .sbtn{
     background: #029a8e;
     color: #f6fbfb;
-    flex: 1 1 auto;
+    flex-basis: 50%;
     max-width: 350px;
     padding: .6rem 0;
     border: 0;
     border-radius: .5rem;
+    margin: 0 .2rem;
 }
 .sbtn-prev{
     background: #959595;

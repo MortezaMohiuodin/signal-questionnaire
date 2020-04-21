@@ -15,6 +15,8 @@ css list:
 ===========================
 6:global classes
 ===========================
+7:responsive
+===========================
 
 */
 
@@ -98,13 +100,8 @@ button:focus{
     justify-content: center;
 }
 
-/* .border-dot{
-    border: 1px dotted #02998d94;
-    border-radius: .5rem;
-} */
-
 .btn-float{
-    padding: 0;
+    padding: 5px;
     display: inline-block;
     background: none;
     border: 0;
@@ -112,9 +109,8 @@ button:focus{
     position: absolute;
     line-height: 19px;
     z-index: 1;
-    right: 0px;
-    top: 50%;
-    transform: translate(0,-50%);
+    left: 0px;
+    top: 0;
 }
 .btn-float:hover{
     color: #ff4444;
@@ -155,9 +151,37 @@ button:focus{
     max-width: 300px;
 }
 
-.bg-color-row{
-    background-color: #efffdd;
+.form-title{
+    color: #02a398;
 }
+.form-section{
+    margin-bottom: 2.5rem;
+}
+
+.form-sections{
+    min-height: 400px;
+}
+
+.row-box{
+    position: relative;
+    background-color: #efffdd38;
+    border-radius: .3rem;
+    border: 1px solid #fde3e3;
+    margin: .5rem;
+    padding: .5rem 0;
+}
+
+/*===================
+    7) responsive 
+=====================*/
+
+@media (max-width:768px){
+    .row-box{
+        margin: .5rem 0;
+        padding: 0;
+    }
+}
+
 
 /* .form-section{
     margin-top: 40px;

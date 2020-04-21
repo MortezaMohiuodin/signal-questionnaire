@@ -5,11 +5,13 @@
         :step="step"/>
         <div class="form-steps">
             <transition name="fade" mode="out-in">
-                <component 
-                :is="formComponent"
-                v-on:handleNextStep="handleNextStep"  
-                v-on:handlePrevStep="handlePrevStep"  
-                ></component>
+                <keep-alive>
+                    <component 
+                    :is="formComponent"
+                    v-on:handleNextStep="handleNextStep"  
+                    v-on:handlePrevStep="handlePrevStep"  
+                    ></component>
+                </keep-alive>
             </transition>
         </div>
     </div>
@@ -19,53 +21,29 @@
 
 import Navigation from '@/components/Navigation.vue'
 
-import PersonalInfo from '@/components/formSections/PersonalInfo.vue'
-import ContactInfo from '@/components/formSections/ContactInfo.vue'
-import EducationInfo from '@/components/formSections/EducationInfo.vue'
-import JobHistoryInfo from '@/components/formSections/JobHistoryInfo.vue'
-import LanguageInfo from '@/components/formSections/LanguageInfo.vue'
-import SkillsInfo from '@/components/formSections/SkillsInfo.vue'
-import ProgramsSkillInfo from '@/components/formSections/ProgramsSkillInfo.vue'
-import CoursesInfo from '@/components/formSections/CoursesInfo.vue'
-import FreeTimeInfo from '@/components/formSections/FreeTimeInfo.vue'
-import SalaryAndRightsInfo from '@/components/formSections/SalaryAndRightsInfo.vue'
-import FileUpload from '@/components/formSections/FileUpload.vue'
+import Specifications from '@/components/formSections/Specifications.vue'
+import Records from '@/components/formSections/Records.vue'
+import SkillAbility from '@/components/formSections/SkillAbility.vue'
 import FinalConfirm from '@/components/formSections/FinalConfirm.vue'
 
 export default {
     name: 'signalForm',
     components: {
        Navigation,
-       PersonalInfo,
-       ContactInfo,
-       EducationInfo,
-       JobHistoryInfo,
-       LanguageInfo,
-       SkillsInfo,
-       ProgramsSkillInfo,
-       CoursesInfo,
-       FreeTimeInfo,
-       SalaryAndRightsInfo,
-       FileUpload,
+       Specifications,
+       Records,
+       SkillAbility,
        FinalConfirm
     },
     data(){
         return{
             steps:[
-                {number: '1',title:'مشخصات فردی'},
-                {number: '2',title:'اطلاعات تماس'},
-                {number: '3',title:'سوابق تحصیلی '},
-                {number: '4',title:'سوابق کاری'},
-                {number: '5',title:'زبان های خارجی'},
-                {number: '6',title:'مهارت های کلیدی'},
-                {number: '7',title:'آشنایی با نرم افزار'},
-                {number: '8',title:'دوره های آموزشی'},
-                {number: '9',title:'اوقات فراغت'},
-                {number: '10',title:'حقوق و مزایا'},
-                {number: '11',title:'آپلود فایل'},
-                {number: '12',title:'تایید نهایی'},
+                {number: '1',title:'مشخصات'},
+                {number: '2',title:'سوابق'},
+                {number: '3',title:'مهارت ها توانایی ها ویژگی ها'},
+                {number: '4',title:'تایید نهایی'}
             ],
-            step:1,
+            step:4,
         }
     },
     computed:{
@@ -73,41 +51,19 @@ export default {
             let component = null
             switch(this.step){
                 case 1: 
-                    component = 'PersonalInfo'
+                    component = 'Specifications'
                     break;
                 case 2:
-                    component = 'ContactInfo'
+                    component = 'Records'
                     break;
                 case 3:
-                    component = 'EducationInfo'
+                    component = 'SkillAbility'
                     break;
                 case 4:
-                    component = 'JobHistoryInfo'
-                    break;
-                case 5:
-                    component = 'LanguageInfo'
-                    break;
-                case 6:
-                    component = 'SkillsInfo'
-                    break;
-                case 7:
-                    component = 'ProgramsSkillInfo'
-                    break;
-                case 8:
-                    component = 'CoursesInfo'
-                    break;
-                case 9:
-                    component = 'FreeTimeInfo'
-                    break;
-                case 10:
-                    component = 'SalaryAndRightsInfo'
-                    break;
-                case 11:
-                    component = 'FileUpload'
-                    break;
-                case 12:
                     component = 'FinalConfirm'
                     break;
+                default:
+                    component = 'Specifications'
             }
             return component
         }
@@ -133,7 +89,12 @@ export default {
 .form-steps{
     background: white;
     border-radius: .7rem;
-    padding: 2rem 1rem;
+    padding:1rem;
     margin-top: 30px;
+}
+@media(max-width: 768px){
+  .form-steps{
+    padding:.5rem;
+}
 }
 </style>

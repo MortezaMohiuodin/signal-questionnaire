@@ -84,7 +84,6 @@ export default {
         onFileChange(e){
             let name = e.target.getAttribute('name')
             let file = e.target.files[0]
-            console.log(file)
             if(file.type === 'application/pdf'){
                 if(name === 'resume'){
                     this.resume = file

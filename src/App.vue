@@ -44,4 +44,9 @@ export default {
 .logo-container img{
     width: 100%;
 }
+@media(max-width: 1100px){
+  #app{
+    max-width: 95vw;
+  }
+}
 </style>

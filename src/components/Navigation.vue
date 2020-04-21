@@ -9,7 +9,12 @@
                          <span 
                          :class="{iconCompleted:step > singleStep.number}" 
                          class="nav-step__progress__icon">
-                            {{step > singleStep.number ? '&#10003;': singleStep.number}}
+                            <template v-if="step > singleStep.number">
+                                <v-icon scale=".8" name="check"/>
+                            </template>
+                            <template v-else>
+                                {{singleStep.number}}
+                            </template>
                         </span>
                     </div>
                     <div class="nav-step__progress__title">{{singleStep.title}}</div>
@@ -28,7 +33,12 @@ export default {
     props:[
         'steps',
         'step'
-    ]
+    ],
+    computed:{
+        stepIcon(){
+            return 1
+        }
+    }
 }
 </script>
 
@@ -95,5 +105,16 @@ ul li:last-child .nav-step__progress{
     font-weight: bold;
     background: #1cc269;
     color: white;
+}
+@media(max-width: 1100px){
+  .nav-step__progress__title{
+    display: none;
+  }
+  .nav-step__progress__icon{
+    width: 27px;
+    height: 27px;
+    line-height: 27px;
+    font-size: 15px;
+  }
 }
 </style>

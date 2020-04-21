@@ -4,7 +4,7 @@
         <div class="test">
             <div class="mx-2 mb-3 p-3 position-relative bg-color-row" v-for="i in rows" v-bind:key="i">
                 <button class="btn-float" @click.prevent="deleteRow(i-1)">
-                    <v-icon scale="1.2" name="trash"/>
+                    <v-icon scale="1.2" name="times"/>
                 </button>
                 <b-row class="mx-0">
                     <b-col sm="4"> 
@@ -98,13 +98,11 @@ export default {
         handlePrevStep(){
             this.$emit('handlePrevStep')
         },
-        addRow(){
-            this.rows++
-            this.languageInfo.push({})
+        addRow(array){
+            array.push({})
         },
-        deleteRow(i){
-            this.rows--
-            this.languageInfo.splice(i,1)
+        deleteRow(index,array){
+            array.splice(index,1)
         }
     }
 }

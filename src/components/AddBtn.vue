@@ -1,13 +1,13 @@
 <template>
-    <a class="btn-add" href="javascript:void(0)" @click.prevent="$emit('addItem')">
-        <span class="btn-add__icon">
-            <v-icon scale="1" name="plus"/>
-        </span>
-        <span class="btn-add__title">ردیف جدید</span>
-    </a>
+    <div class="text-right">
+        <a class="btn-add" href="javascript:void(0)" @click.prevent="$emit('addItem')">
+            <v-icon scale="1.3" color="#1cc269" name="plus"/>
+        </a>
+    </div>
+    
 </template>
 <style scoped>
-.btn-add{
+/* .btn-add{
     background: #00C851;
     color: white;
     border-radius: .3rem;
@@ -26,6 +26,6 @@
 }
 a.btn-add:hover{
     color: white;
-}
+} */
 </style>
 
