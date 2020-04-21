@@ -219,12 +219,10 @@ export default {
         onFileChange(e,index){
             let file = e.target.files[0]
             let error = null
-            console.log(file)
-
             if(file.type !== 'application/pdf' && file.type !== 'image/jpeg'){
                 error = 'لطفا تنها فایل PDF و JPG بارگذاری کنید'
             }else if(file.size > 500000){
-                error = 'فایل باید کمتر از 50 کیلوبایت باشد'
+                error = 'فایل باید کمتر از 500 کیلوبایت باشد'
             }
 
             if(error){

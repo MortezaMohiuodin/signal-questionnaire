@@ -63,19 +63,19 @@
                             <b-col cols="6">
                                 <b-form-group>
                                     <ValidationProvider rules="required|numeric" v-slot="{errors}">
-                                        <b-form-input placeholder="سال" v-model="personalInfo.insurance_year"></b-form-input>
-                                        <span class="errMessage">{{errors[0]}}</span>
-                                    </ValidationProvider>
-                                </b-form-group>
-                            </b-col>
-                            <b-col cols="6">
-                                <b-form-group>
-                                    <ValidationProvider rules="required|numeric" v-slot="{errors}">
                                         <b-form-input placeholder="ماه" v-model="personalInfo.insurance_month"></b-form-input>
                                         <span class="errMessage">{{errors[0]}}</span>
                                     </ValidationProvider>
                                 </b-form-group>
                             </b-col>    
+                            <b-col cols="6">
+                                <b-form-group>
+                                    <ValidationProvider rules="required|numeric" v-slot="{errors}">
+                                        <b-form-input placeholder="سال" v-model="personalInfo.insurance_year"></b-form-input>
+                                        <span class="errMessage">{{errors[0]}}</span>
+                                    </ValidationProvider>
+                                </b-form-group>
+                            </b-col>
                         </b-row>
                     </b-col>
                     <b-col sm="4"> 

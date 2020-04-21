@@ -48,9 +48,9 @@
                         </ValidationProvider>
                     </b-col>
                     <b-col sm="4"> 
-                        <ValidationProvider rules="required" v-slot="{errors}">
+                        <ValidationProvider v-slot="{errors}">
                             <b-form-group
-                            label="دانشگاه *"
+                            label="دانشگاه"
                             label-class="font-weight-bold">
                                 <b-form-input v-model="educationInfo[i-1].school"></b-form-input>
                                 <span class="errMessage">{{errors[0]}}</span>
@@ -114,11 +114,24 @@
                         </ValidationProvider>
                     </b-col>
                     <b-col sm="4"> 
+                        <ValidationProvider rules="required" v-slot="{errors}">
+                            <b-form-group
+                            label="حقوق دریافتی (تومان) *"
+                            label-class="font-weight-bold">
+                                <b-form-input v-model="jobHistoryInfo[i-1].salary"></b-form-input>                          <!-- <b-form-input v-model="jobHistoryInfo[i-1].salary"></b-form-input> -->
+                                <span class="errMessage">{{errors[0]}}</span>
+                            </b-form-group>
+                        </ValidationProvider>
+                    </b-col>
+                    <b-col sm="4"> 
                         <ValidationProvider v-slot="{errors}">
                             <b-form-group
                             label="تاریخ شروع (ماه و سال)"
                             label-class="font-weight-bold">
-                                <b-form-input v-model="jobHistoryInfo[i-1].startDate"></b-form-input>
+                                <VuePersianDatetimePicker 
+                                v-model="jobHistoryInfo[i-1].startDate"
+                                type="year-month"
+                                ></VuePersianDatetimePicker>
                                 <span class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -128,28 +141,10 @@
                         <b-form-group
                             label="تاریخ پایان (ماه و سال)"
                             label-class="font-weight-bold">
-                                <b-form-input v-model="jobHistoryInfo[i-1].endDate"></b-form-input>
-                                <span class="errMessage">{{errors[0]}}</span>
-                            </b-form-group>
-                        </ValidationProvider>
-                    </b-col>
-                    <b-col sm="4"> 
-                        <ValidationProvider rules="required" v-slot="{errors}">
-                            <b-form-group
-                            label="حقوق دریافتی (تومان) *"
-                            label-class="font-weight-bold">
-                                <b-form-input v-model="jobHistoryInfo[i-1].salary"></b-form-input>
-                                <span class="errMessage">{{errors[0]}}</span>
-                            </b-form-group>
-                        </ValidationProvider>
-                    </b-col>
-                    <b-col sm="4"> 
-                        <ValidationProvider v-slot="{errors}">
-                            <b-form-group
-                            label="علت انتخاب"
-                            label-class="font-weight-bold">
-                                <b-form-textarea v-model="jobHistoryInfo[i-1].score"></b-form-textarea>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <VuePersianDatetimePicker 
+                                v-model="jobHistoryInfo[i-1].endDate"
+                                type="year-month"
+                                ></VuePersianDatetimePicker>                                <span class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
@@ -186,7 +181,7 @@
                         </ValidationProvider>
                     </b-col>
                     <b-col sm="4"> 
-                        <ValidationProvider v-slot="{errors}">
+                        <ValidationProvider v-slot="{errors}" rules="numeric">
                             <b-form-group
                             label="مدت دوره (ماه)"
                             label-class="font-weight-bold">
@@ -208,7 +203,7 @@
                 </b-row>
                 <AddBtn v-on:addItem='addRow(coursesInfo)'/>
             </div>
-            
+
         </div>
         <NabButtons 
         v-on:handleNextStep="handleSubmit(handleNextStep)"
@@ -220,10 +215,15 @@
 <script>
 import NabButtons from '@/components/NavButtons.vue'
 import AddBtn from '@/components/AddBtn.vue'
+import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
 
 export default {
     name: 'records',
-    components:{AddBtn,NabButtons},
+    components:{
+        AddBtn,
+        NabButtons,
+        VuePersianDatetimePicker,
+        },
     data(){
         return{
             options:{
@@ -245,7 +245,7 @@ export default {
             },
             educationInfo:[{}],
             jobHistoryInfo:[{}],
-            coursesInfo:[{}]
+            coursesInfo:[{}],
         }
             
     },
