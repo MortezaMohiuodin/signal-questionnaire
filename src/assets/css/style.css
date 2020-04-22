@@ -19,6 +19,14 @@ css list:
 ===========================
 
 */
+/*===================
+    variables
+=====================*/
+
+:root{
+    --text-gray: #a29797;
+}
+
 
 /*===================
     1) fonts 
@@ -33,12 +41,43 @@ css list:
     font-style: normal;
 }
 
+@font-face {
+    font-family: IRANYekan;
+    font-style: normal;
+    font-weight: 600;
+    src: url('../fonts/IranYekan/iranyekanwebbold.eot');
+    src: url('../fonts/IranYekan/iranyekanwebbold.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+    url('../fonts/IranYekan/iranyekanwebbold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/IranYekan/iranyekanwebbold.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/IranYekan/iranyekanwebbold.ttf') format('truetype');
+}
+@font-face {
+    font-family: IRANYekan;
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/IranYekan/iranyekanweblight.eot');
+    src: url('../fonts/IranYekan/iranyekanweblight.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+    url('../fonts/IranYekan/iranyekanweblight.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/IranYekan/iranyekanweblight.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/IranYekan/iranyekanweblight.ttf') format('truetype');
+}
+@font-face {
+    font-family: IRANYekan;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/IranYekan/iranyekanwebregular.eot');
+    src: url('../fonts/IranYekan/iranyekanwebregular.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+    url('../fonts/IranYekan/iranyekanwebregular.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/IranYekan/iranyekanwebregular.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/IranYekan/iranyekanwebregular.ttf') format('truetype');
+}
+
 /*===================
     2) typography 
 =====================*/
 
 body,h1,h2,h3,h4,h5,h6,p,span,button,div,a,li{
-    font-family: Yekan,sans-serif;
+    font-family: IRANYekan,sans-serif;
 }
 
 /*===================
@@ -87,8 +126,26 @@ textarea.form-control{
 }
 
 .errMessage{
-    color: #f22435;
+    position: relative;
     font-size: .8rem;
+    width: 100%;
+    display: inline-block;
+    background: #e76767;
+    color: white;
+    padding: .5rem;
+    margin-top: .6rem;
+    border-radius: .5rem;
+}
+.errMessage::before{
+    content: "";
+    display: inline-block;
+    background-color: #e76767;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 10px;
+    top: -5px;
+    transform: rotateZ(45deg);
 }
 
 button:focus{
@@ -112,13 +169,24 @@ button:focus{
     left: 0px;
     top: 0;
 }
+.btn-remove{
+    padding: 5px;
+    background: none;
+    border: 0;
+    color: #ff4444b5;
+}
+.btn-remove:hover{
+    color: #ff4444;
+}
 .btn-float:hover{
     color: #ff4444;
 }
 
 /*===================
-    5) select2 reset
+    5) plugins reset
 =====================*/
+
+/* Select2 */
 
 .vs__dropdown-toggle{
     background: #f3f3f3!important;
@@ -140,11 +208,23 @@ button:focus{
     display: none;
 }
 
+/* Vue persian datepicker */
+
+.vpd-icon-btn{
+    border-radius: 0 .5rem .5rem 0;
+}
+.vpd-input-group input{
+    border-radius: .5rem 0 0 .5rem;
+}
 /*===================
    6) global classes
 =====================*/
 .text-light{
     color: #f6fbfb;
+}
+
+.text-gray{
+    color: var(--text-gray);
 }
 
 .mw-300{
@@ -171,6 +251,41 @@ button:focus{
     padding: .5rem 0;
 }
 
+.row-flex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    background-color: #efffdd38;
+    border-radius: .3rem;
+    border: 1px solid #fde3e3;
+    padding: .5rem;
+    margin: .5rem 0;
+}
+
+.item-flex{
+    flex:1 1 160px;
+    margin: 0 .3rem;
+    max-width: 300px;
+}
+.item-flex__two{
+    flex: 2 1 320px!important;
+    max-width: initial!important;
+}
+
+.error input{
+    background: #ffffff url(../images/exclamation_icon.svg) no-repeat left center;
+    border: 1px solid #e76767;
+    background-position: 8px;
+}
+
+/* .success input{
+    background: #ffffff url(../images/tick_icon.svg) no-repeat left center;
+    border: 1px solid #32c671;
+    background-position: 8px;
+} */
+
 /*===================
     7) responsive 
 =====================*/
@@ -182,17 +297,12 @@ button:focus{
     }
 }
 
+@media (max-width:768px){
+    .item-flex{
+        max-width: initial;
+    }
+}
 
-/* .form-section{
-    margin-top: 40px;
-    margin-bottom: 100px;
-} */
 
-/* .form-buttons{
-    margin-top: 20px;
-} */
-/* .form-buttons{
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-} */
+
+

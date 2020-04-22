@@ -29,7 +29,8 @@ export default {
     margin-bottom: 150px;
 }
 .bg-signal{
-    background: url('./assets/images/background.svg');
+    background: #ffffff url(assets/images/background.svg) no-repeat center center;
+    background-size: cover;
     position: absolute;
     left: 0;
     right: 0;

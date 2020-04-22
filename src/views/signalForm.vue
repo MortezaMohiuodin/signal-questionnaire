@@ -43,7 +43,7 @@ export default {
                 {number: '3',title:'مهارت ها توانایی ها ویژگی ها'},
                 {number: '4',title:'تایید نهایی'}
             ],
-            step:4,
+            step:2,
         }
     },
     computed:{

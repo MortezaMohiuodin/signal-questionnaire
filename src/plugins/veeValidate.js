@@ -6,22 +6,23 @@ setInteractionMode('eager');
 // Rules
 extend('required', {
     ...required,
-    message: 'این فیلد الزامی است'
+    message: '{_field_} الزامی است'
 });
+
 
 extend('numeric', {
     ...numeric,
-    message: 'لطفا عدد وارد کنید'
+    message: '{_field_} باید به عدد باشد'
 });
 
 extend('email', {
     ...email,
-    message: 'لطفا ایمیل معتبر وارد کنید'
+    message: '{_field_} معتبر نیست'
 });
 
 extend('alpha', {
     ...alpha,
-    message: 'لطفا تنها حروف وارد کنید'
+    message: '{_field_} باید تنها به حروف باشد'
 });
 
 extend('digits', {
@@ -29,7 +30,7 @@ extend('digits', {
       return value.length == length;
     },
     params: ['length'],
-    message: 'باید {length} عددی باشد'
+    message: '{_field_} باید {length} عدد باشد'
 });
 
 // Register it globally

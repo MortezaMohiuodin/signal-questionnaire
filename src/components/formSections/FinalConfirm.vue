@@ -8,12 +8,13 @@
                 <hr>
                 <b-row>
                     <b-col sm="4">
-                        <ValidationProvider rules="required" v-slot="{errors}">
+                        <ValidationProvider rules="required" v-slot="{errors}" name="حقوق پیشنهادی">
                             <b-form-group
+                            :class="{error:errors[0]}"
                             label="حداقل حقوق پیشنهادی (تومان)"
                             label-class="font-weight-bold">
                                 <b-form-input v-on:keyup="addComma(salary)" v-model="salary"></b-form-input>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
@@ -31,7 +32,7 @@
                 <hr>
                 <b-row>
                     <b-col sm="4">
-                        <ValidationProvider rules="required" v-slot="{errors}">
+                        <ValidationProvider v-slot="{errors}">
                             <b-input-group>
                                 <b-form-input class="mw-300" v-model="phoneNumber"></b-form-input>
                                 <b-input-group-append>
@@ -40,7 +41,7 @@
                                     </b-button>
                                 </b-input-group-append>
                             </b-input-group>
-                            <span class="errMessage">{{errors[0]}}</span>
+                            <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                         </ValidationProvider>
                     </b-col>
                 </b-row>

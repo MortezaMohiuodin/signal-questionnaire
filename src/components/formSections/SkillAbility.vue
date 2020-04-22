@@ -13,7 +13,7 @@
                         <v-icon scale="1.2" name="times"/>
                     </button>
                     <b-col sm="4"> 
-                        <ValidationProvider rules="required" v-slot="{errors}">
+                        <ValidationProvider v-slot="{errors}" name="زبان خارجی">
                             <b-form-group
                             label="زبان خارجی"
                             label-class="font-weight-bold">
@@ -22,48 +22,48 @@
                                 v-model="languageInfo[i-1].language"
                                 :options="options.languages">
                                 </v-select>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
                     <b-col sm="4" 
                     v-if="languageInfo[i-1].language && languageInfo[i-1].language.value === 'others'"> 
-                        <ValidationProvider rules="required" v-slot="{errors}">
+                        <ValidationProvider rules="required" v-slot="{errors}" name="توضیح سایر">
                             <b-form-group
                             label="سایر"
                             label-class="font-weight-bold">
                                 <b-form-input v-model="languageInfo[i-1].languageOther"></b-form-input>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
                     <b-row class="mx-0" v-if="languageInfo[i-1].language">
                         <b-col sm="3"> 
-                            <ValidationProvider rules="required" v-slot="{errors}">
-                                <div class="text-center mb-1">مهارت گفتاری *</div>
+                            <ValidationProvider rules="required" v-slot="{errors}" name="مهارت گفتاری"> 
+                                <div class="text-center mb-1" >مهارت گفتاری</div>
                                 <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languageInfo[i-1].speaking"/>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                         <b-col sm="3"> 
-                            <ValidationProvider rules="required" v-slot="{errors}">
-                                <div class="text-center mb-1">مهارت شنیداری *</div>
+                            <ValidationProvider rules="required" v-slot="{errors}" name="مهارت شنیداری">
+                                <div class="text-center mb-1">مهارت شنیداری </div>
                                 <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languageInfo[i-1].listening"/>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                         <b-col sm="3"> 
-                            <ValidationProvider rules="required" v-slot="{errors}">
-                                <div class="text-center mb-1">مهارت خواندن *</div>
+                            <ValidationProvider rules="required" v-slot="{errors}" name="مهارت خواندن">
+                                <div class="text-center mb-1">مهارت خواندن</div>
                                 <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languageInfo[i-1].reading"/>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                         <b-col sm="3"> 
-                            <ValidationProvider rules="required" v-slot="{errors}">
-                                <div class="text-center mb-1">مهارت نوشتاری *</div>
+                            <ValidationProvider rules="required" v-slot="{errors}" name="مهارت نوشتاری">
+                                <div class="text-center mb-1">مهارت نوشتاری </div>
                                 <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languageInfo[i-1].writing"/>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                     </b-row>
@@ -80,7 +80,7 @@
                         <b-form-checkbox
                             v-model="program.checked"
                             :value="program.value"
-                            class="mb-1">
+                            class="mb-1 pl-4">
                             {{program.title}}
                         </b-form-checkbox>
                         <StarRating v-if="program.checked" 
@@ -102,7 +102,7 @@
             <div class="form-section">
                 <h5 class="form-title">بارگذاری فایل ها</h5>
                 <hr>
-                <b-row class="row-box" v-for="(fileUpload,i) in filesUpload" v-bind:key="fileUpload">
+                <b-row class="row-box" v-for="(fileUpload,i) in filesUpload" v-bind:key="i">
                     <button class="btn-float" @click.prevent="deleteRow(i,filesUpload)">
                         <v-icon scale="1.2" name="times"/>
                     </button>
@@ -116,7 +116,7 @@
                                 v-model="filesUpload[i].name"
                                 :options="options.filesUpload">
                                 </v-select>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
@@ -126,7 +126,7 @@
                             label="سایر"
                             label-class="font-weight-bold">
                                 <b-form-input v-model="filesUpload[i].fileOther"></b-form-input>
-                                <span class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
