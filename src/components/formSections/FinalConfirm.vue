@@ -12,7 +12,7 @@
                             <b-form-group
                             label="حداقل حقوق پیشنهادی (تومان)"
                             label-class="font-weight-bold">
-                                <b-form-input class="" v-model="salary"></b-form-input>
+                                <b-form-input v-on:keyup="addComma(salary)" v-model="salary"></b-form-input>
                                 <span class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -96,6 +96,10 @@ export default {
                 confirmButtonText: 'خب',
                 confirmButtonColor:'#1cc269'
             })
+        },
+        addComma(n){
+            this.salary = n.replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
     }

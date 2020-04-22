@@ -118,7 +118,7 @@
                             <b-form-group
                             label="حقوق دریافتی (تومان) *"
                             label-class="font-weight-bold">
-                                <b-form-input v-model="jobHistoryInfo[i-1].salary"></b-form-input>                          <!-- <b-form-input v-model="jobHistoryInfo[i-1].salary"></b-form-input> -->
+                                <b-form-input v-on:keyup="addComma(i-1)" v-model="jobHistoryInfo[i-1].salary"></b-form-input>                          <!-- <b-form-input v-model="jobHistoryInfo[i-1].salary"></b-form-input> -->
                                 <span class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -261,6 +261,10 @@ export default {
         },
         deleteRow(index,array){
             array.splice(index,1)
+        },
+        addComma(index){
+            this.jobHistoryInfo[index].salary = this.jobHistoryInfo[index].salary.replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     }
 }
