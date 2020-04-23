@@ -28,7 +28,7 @@
                     </b-col>
                     <b-col sm="4"> 
                         <ValidationProvider rules="required" name="جنسیت" v-slot="{errors}">
-                            <b-form-group>
+                            <b-form-group :class="{error:errors[0]}">
                                 <label class="font-weight-bold">جنسیت</label>
                                 <v-select
                                 label="text"
@@ -116,20 +116,17 @@
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-col sm="4" v-if="personalInfo.sex === 'man'">
-                        <ValidationProvider rules="required" v-slot="{errors}" name="وضعیت نظام وظیفه">
-                            <b-form-group>
-                                <label class="font-weight-bold">وضعیت نظام وظیفه</label>
-                                <v-select
-                                label="text"
-                                v-model="personalInfo.military"
-                                :options="options.military"
-                                :reduce="item => item.value">
-                                </v-select>
+                    <b-col sm="4" v-if="contactInfo.knowVia === 'others'"> 
+                        <ValidationProvider rules="required" v-slot="{errors}" name="توضیح سایر">
+                            <b-form-group :class="{error:errors[0]}">
+                                <label class="font-weight-bold">سایر (آشنایی با ما)</label>
+                                <b-form-input v-model="contactInfo.knowViaOther"></b-form-input>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
-                        </ValidationProvider> 
+                        </ValidationProvider>
                     </b-col>
+                </b-row>
+                <b-row>
                     <b-col sm="4"> 
                         <ValidationProvider rules="required" v-slot="{errors}" name="وضعیت تاهل">
                             <b-form-group>
@@ -144,21 +141,25 @@
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    
+                    <b-col sm="4" v-if="personalInfo.sex === 'man'">
+                        <ValidationProvider rules="required" v-slot="{errors}" name="وضعیت نظام وظیفه">
+                            <b-form-group>
+                                <label class="font-weight-bold">وضعیت نظام وظیفه</label>
+                                <v-select
+                                label="text"
+                                v-model="personalInfo.military"
+                                :options="options.military"
+                                :reduce="item => item.value">
+                                </v-select>
+                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
+                            </b-form-group>
+                        </ValidationProvider> 
+                    </b-col>
                     <b-col sm="4" v-if="personalInfo.military === 'other'"> 
                         <ValidationProvider rules="required" v-slot="{errors}" name="توضیح سایر">
                             <b-form-group :class="{error:errors[0]}">
                                 <label class="font-weight-bold">سایر (نظام وظیفه)</label>
                                 <b-form-input v-model="personalInfo.militaryOther"></b-form-input>
-                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
-                            </b-form-group>
-                        </ValidationProvider>
-                    </b-col>
-                    <b-col sm="4" v-if="contactInfo.knowVia === 'others'"> 
-                        <ValidationProvider rules="required" v-slot="{errors}" name="توضیح سایر">
-                            <b-form-group :class="{error:errors[0]}">
-                                <label class="font-weight-bold">سایر (آشنایی با ما)</label>
-                                <b-form-input v-model="contactInfo.knowViaOther"></b-form-input>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -234,7 +235,6 @@
         
         <NabButtons 
         v-on:handleNextStep="handleSubmit(handleNextStep)"
-        v-on:handlePrevStep="handlePrevStep"
         :hidePrev="true"/>
      </ValidationObserver>
   </div>

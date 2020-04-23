@@ -143,7 +143,7 @@ textarea.form-control{
     width: 15px;
     height: 15px;
     position: absolute;
-    left: 10px;
+    left: 12px;
     top: -5px;
     transform: rotateZ(45deg);
 }
@@ -275,6 +275,12 @@ button:focus{
 }
 
 .error input{
+    background: #ffffff url(../images/exclamation_icon.svg) no-repeat left center;
+    border: 1px solid #e76767;
+    background-position: 8px;
+}
+
+.error select{
     background: #ffffff url(../images/exclamation_icon.svg) no-repeat left center;
     border: 1px solid #e76767;
     background-position: 8px;

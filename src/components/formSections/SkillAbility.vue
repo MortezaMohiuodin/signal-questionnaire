@@ -10,7 +10,7 @@
                 <hr>
                 <b-row class="row-box" v-for="i in languageInfo.length" v-bind:key="i">
                     <button class="btn-float" @click.prevent="deleteRow(i-1,languageInfo)">
-                        <v-icon scale="1.2" name="times"/>
+                        <v-icon scale="1.5" name="times"/>
                     </button>
                     <b-col sm="4"> 
                         <ValidationProvider v-slot="{errors}" name="زبان خارجی">
@@ -104,7 +104,7 @@
                 <hr>
                 <b-row class="row-box" v-for="(fileUpload,i) in filesUpload" v-bind:key="i">
                     <button class="btn-float" @click.prevent="deleteRow(i,filesUpload)">
-                        <v-icon scale="1.2" name="times"/>
+                        <v-icon scale="1.5" name="times"/>
                     </button>
                     <b-col sm="4"> 
                         <ValidationProvider v-slot="{errors}">
@@ -136,7 +136,7 @@
                         label-class="font-weight-bold"
                         class="mb-0">
                             <label class="custom-file-upload">
-                                <v-icon scale="1.2" name="upload"/> <small>بارگذاری </small>
+                                <v-icon scale="1.5" name="upload"/> <small>بارگذاری </small>
                                 <input @change="onFileChange($event,i)" aria-describedby="addon-right addon-left" type="file" class="form-control d-none">
                             </label>
                             <span class="mr-2" v-if="filesUpload[i].file">{{filesUpload[i].file.name}}</span>
