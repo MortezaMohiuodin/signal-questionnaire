@@ -20,7 +20,7 @@
                     </b-col>
                     <b-col sm="4">
                         <ItemList 
-                        :items="items" 
+                        :items="advantages" 
                         :listName="'مزایا و شرایط درخواستی شما'"/>
                     </b-col>
                 </b-row>
@@ -51,11 +51,10 @@
         <div class="form-nav-buttons">
             <button
             class="sbtn"
-            @click.prevent="handleSubmit(sendData)">
+            @click.prevent="handleSubmit(handleNextStep)">
                 تایید نهایی
             </button>
             <button 
-            :class="{dNone:hidePrev}" 
             class="sbtn sbtn-prev" 
             @click.prevent="handlePrevStep">
                 قبلی
@@ -78,9 +77,10 @@ export default {
     },
     data(){
         return{
-            items:[],
+            advantages:[],
             salary:null,
-            phoneNumber: '0919xxxxxxxx'
+            phoneNumber: '0919xxxxxxxx',
+            finalConfirm:null
         }
             
     },
@@ -88,15 +88,28 @@ export default {
         handlePrevStep(){
             this.$emit('handlePrevStep')
         },
-        sendData(){
-            //Sending data to server
-            dialog.fire({
-                title: 'پیام',
-                text: 'اطلاعات با موفقیت ثبت شد',
-                icon: 'success',
-                confirmButtonText: 'خب',
-                confirmButtonColor:'#1cc269'
+        handleNextStep(){
+            this.finalConfirm = {
+                advantages: this.advantages,
+                salary: this.salary
+            }
+            this.$store.dispatch('changeFinalConfirm',this.finalConfirm)
+            .then(
+                this.$store.dispatch('sendData')
+            ).then(res => {
+                console.log(res)
+                dialog.fire({
+                    title: 'پیام',
+                    text: 'اطلاعات با موفقیت ثبت شد',
+                    icon: 'success',
+                    confirmButtonText: 'خب',
+                    confirmButtonColor:'#1cc269'
+                })
+            }).catch(err => {
+                console.log(err)
             })
+            
+           
         },
         addComma(n){
             this.salary = n.replace(/\D/g, "")

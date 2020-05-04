@@ -126,7 +126,10 @@ textarea.form-control{
 }
 
 .errMessage{
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(0, 124%);
     font-size: .8rem;
     width: 100%;
     display: inline-block;
@@ -135,6 +138,11 @@ textarea.form-control{
     padding: .5rem;
     margin-top: .6rem;
     border-radius: .5rem;
+    z-index: 1;
+    opacity: 0;
+    transition: all .3s;
+    animation-name: hide5s;
+    animation-duration: 3s;
 }
 .errMessage::before{
     content: "";
@@ -143,9 +151,26 @@ textarea.form-control{
     width: 15px;
     height: 15px;
     position: absolute;
-    left: 12px;
+    left: 9px;
     top: -5px;
     transform: rotateZ(45deg);
+}
+.v-select + .error_icon{
+    left: 27px
+}
+.v-select + .error_icon + .errMessage::before{
+    left: 30px;
+}
+@keyframes hide5s{
+    0%{
+        opacity: 1;
+    }
+    80%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
 }
 
 button:focus{
@@ -181,6 +206,9 @@ button:focus{
 .btn-float:hover{
     color: #ff4444;
 }
+.form-group{
+    position: relative;
+}
 
 /*===================
     5) plugins reset
@@ -212,7 +240,13 @@ button:focus{
 
 .vpd-icon-btn{
     border-radius: 0 .5rem .5rem 0;
+    background-color:rgb(181, 181, 181) !important;
 }
+.vpd-icon-btn svg{
+    position: relative;
+    bottom: 2px;
+}
+
 .vpd-input-group input{
     border-radius: .5rem 0 0 .5rem;
 }
@@ -273,8 +307,18 @@ button:focus{
     flex: 2 1 320px!important;
     max-width: initial!important;
 }
+.error_icon{
+    position: absolute;
+    left: 6px;
+    bottom: 8px;
+    cursor: help;
+}
+.error_icon:hover + .errMessage{
+    opacity: 1;
+}
 
-.error input{
+
+/* .error input{
     background: #ffffff url(../images/exclamation_icon.svg) no-repeat left center;
     border: 1px solid #e76767;
     background-position: 8px;
@@ -284,7 +328,7 @@ button:focus{
     background: #ffffff url(../images/exclamation_icon.svg) no-repeat left center;
     border: 1px solid #e76767;
     background-position: 8px;
-}
+} */
 
 /* .success input{
     background: #ffffff url(../images/tick_icon.svg) no-repeat left center;
@@ -309,6 +353,17 @@ button:focus{
     }
 }
 
+
+.custom-control-inline{
+    margin-right: 0;
+}
+.custom-control{
+    padding-left: 2.5rem;
+}
+select option {
+    background: #ffffff;
+    color: black;
+}
 
 
 

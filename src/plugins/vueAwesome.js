@@ -8,6 +8,8 @@ import 'vue-awesome/icons/plus-square'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/upload'
 import 'vue-awesome/icons/check'
+import 'vue-awesome/icons/exclamation-circle' 
+// import 'vue-awesome/icons/comment-alt-exclamation' 
 
 Vue.component('v-icon', Icon)
 

@@ -8,8 +8,8 @@
             <div class="form-section">
                 <h5 class="form-title">زبان های خارجی</h5>
                 <hr>
-                <b-row class="row-box" v-for="i in languageInfo.length" v-bind:key="i">
-                    <button class="btn-float" @click.prevent="deleteRow(i-1,languageInfo)">
+                <b-row class="row-box" v-for="i in languages.length" v-bind:key="i">
+                    <button class="btn-float" @click.prevent="deleteRow(i-1,languages)">
                         <v-icon scale="1.5" name="times"/>
                     </button>
                     <b-col sm="4"> 
@@ -19,69 +19,70 @@
                             label-class="font-weight-bold">
                                 <v-select
                                 label="text"
-                                v-model="languageInfo[i-1].language"
-                                :options="options.languages">
+                                v-model="languages[i-1].language"
+                                :options="options.languages"
+                                :reduce="item => item.value">
                                 </v-select>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
                     <b-col sm="4" 
-                    v-if="languageInfo[i-1].language && languageInfo[i-1].language.value === 'others'"> 
+                    v-if="languages[i-1].language && languages[i-1].language.value === 'others'"> 
                         <ValidationProvider rules="required" v-slot="{errors}" name="توضیح سایر">
                             <b-form-group
                             label="سایر"
                             label-class="font-weight-bold">
-                                <b-form-input v-model="languageInfo[i-1].languageOther"></b-form-input>
+                                <b-form-input v-model="languages[i-1].language_other"></b-form-input>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-row class="mx-0" v-if="languageInfo[i-1].language">
+                    <b-row class="mx-0" v-if="languages[i-1].language">
                         <b-col sm="3"> 
                             <ValidationProvider rules="required" v-slot="{errors}" name="مهارت گفتاری"> 
                                 <div class="text-center mb-1" >مهارت گفتاری</div>
-                                <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languageInfo[i-1].speaking"/>
+                                <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languages[i-1].speaking"/>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                         <b-col sm="3"> 
                             <ValidationProvider rules="required" v-slot="{errors}" name="مهارت شنیداری">
                                 <div class="text-center mb-1">مهارت شنیداری </div>
-                                <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languageInfo[i-1].listening"/>
+                                <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languages[i-1].listening"/>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                         <b-col sm="3"> 
                             <ValidationProvider rules="required" v-slot="{errors}" name="مهارت خواندن">
                                 <div class="text-center mb-1">مهارت خواندن</div>
-                                <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languageInfo[i-1].reading"/>
+                                <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languages[i-1].reading"/>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                         <b-col sm="3"> 
                             <ValidationProvider rules="required" v-slot="{errors}" name="مهارت نوشتاری">
                                 <div class="text-center mb-1">مهارت نوشتاری </div>
-                                <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languageInfo[i-1].writing"/>
+                                <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languages[i-1].writing"/>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                     </b-row>
                 </b-row>
-                <AddBtn v-on:addItem='addRow(languageInfo)'/>
+                <AddBtn v-on:addItem='addRow(languages)'/>
             </div>
 
-             <!-- Programs skill -->
+             <!-- Program skill -->
             <div class="form-section">
                 <h5 class="form-title">آشنایی با نرم افزارهای کاربردی</h5>
                 <hr>
                 <b-row>
-                    <b-col cols="6" sm="4" md="2" v-for="program in programs" v-bind:key="program.value">
+                    <b-col cols="6" sm="4" md="2" v-for="program in program_skills" v-bind:key="program.value">
                         <b-form-checkbox
                             v-model="program.checked"
                             :value="program.value"
                             class="mb-1 pl-4">
-                            {{program.title}}
+                            {{program.name}}
                         </b-form-checkbox>
                         <StarRating v-if="program.checked" 
                         v-bind:star-size="25" 
@@ -95,7 +96,7 @@
             <div class="form-section">
                 <h5 class="form-title">مهارت های تخصصی</h5>
                 <hr>
-                <ItemList :items="proSkillItems"/>
+                <ItemList :items="skills"/>
             </div>
 
             <!-- File uploads -->
@@ -114,18 +115,19 @@
                                 <v-select
                                 label="text"
                                 v-model="filesUpload[i].name"
-                                :options="options.filesUpload">
+                                :options="options.filesUpload"
+                                :reduce="item => item.value">
                                 </v-select>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-col sm="4" v-if="filesUpload[i].name && filesUpload[i].name.value === 'others'"> 
+                    <b-col sm="4" v-if="filesUpload[i].name === 'others'"> 
                         <ValidationProvider rules="required" v-slot="{errors}">
                             <b-form-group
                             label="سایر"
                             label-class="font-weight-bold">
-                                <b-form-input v-model="filesUpload[i].fileOther"></b-form-input>
+                                <b-form-input v-model="filesUpload[i].file_other"></b-form-input>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -190,21 +192,34 @@ export default {
                 { value: 'others', text: 'سایر'}
               ]
             },
-            programs:[
-                  { value: 'excel', title:'اکسل',checked:null,rating:null},
-                  { value: 'photoshop', title:'فوتوشاپ',checked:null,rating:null},
-                  { value: 'tenFinger', title:'تایپ ده انگشتی',checked:null,rating:null},
-                  { value: 'web', title:'وبگردی',checked:null,rating:null},
-                  { value: 'network', title:'شبکه',checked:null,rating:null}
+            program_skills:[
+                  { value: 'excel', name:'اکسل',checked:null,rating:null},
+                  { value: 'photoshop', name:'فوتوشاپ',checked:null,rating:null},
+                  { value: 'tenFinger', name:'تایپ ده انگشتی',checked:null,rating:null},
+                  { value: 'web', name:'وبگردی',checked:null,rating:null},
+                  { value: 'network', name:'شبکه',checked:null,rating:null}
             ],
-            languageInfo:[{}],
-            proSkillItems:[],
-            filesUpload:[{}]
+            languages:[{}],
+            skills:[],
+            filesUpload:[{}],
+            skillAbility:null
         }
             
     },
     methods:{
         handleNextStep(){
+            let selected_programs = this.program_skills.filter(item => {
+                if(item.checked){
+                    return item
+                }
+            })
+            this.skillAbility = {
+                languages: this.languages,
+                skills: this.skills,
+                filesUpload:this.filesUpload,
+                program_skills:selected_programs
+            }
+            this.$store.dispatch('changeSkillAbility',this.skillAbility)
             this.$emit('handleNextStep')
         },
         handlePrevStep(){
