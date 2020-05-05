@@ -59,7 +59,7 @@
                         <ValidationProvider rules="required" name="تاریخ تولد" v-slot="{errors}">
                             <b-form-group >
                                 <label class="font-weight-bold">تاریخ تولد</label>
-                                <VuePersianDatetimePicker v-model="specification.birth_date"></VuePersianDatetimePicker>
+                                <VuePersianDatetimePicker v-model="specification.birth_date" format="YYYY-MM-DD"></VuePersianDatetimePicker>
                                 <span v-if="errors[0]" class="error_icon">
                                     <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
                                 </span>
@@ -84,7 +84,7 @@
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-col sm="4" v-if="specification.knowVia === 'others'"> 
+                    <b-col sm="4" v-if="specification.knowVia == '0'"> 
                         <ValidationProvider rules="required" v-slot="{errors}" name="توضیح سایر">
                             <b-form-group >
                                 <label class="font-weight-bold">سایر (آشنایی با ما)</label>
@@ -96,7 +96,7 @@
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-col sm="4" v-if="specification.gender === 'man'">
+                    <b-col sm="4" v-if="specification.gender == '0'">
                         <ValidationProvider rules="required" v-slot="{errors}" name="وضعیت نظام وظیفه">
                             <b-form-group>
                                 <label class="font-weight-bold">وضعیت نظام وظیفه</label>
@@ -148,13 +148,13 @@
                                 <label class="font-weight-bold">سابقه بیمه</label>
                                 <span class="text-gray"> - اختیاری</span>
                                 <b-form-radio-group v-model="specification.insurance">
-                                    <b-form-radio value="yes">دارم</b-form-radio>
-                                    <b-form-radio value="no">ندارم</b-form-radio>
+                                    <b-form-radio value="1">دارم</b-form-radio>
+                                    <b-form-radio value="0">ندارم</b-form-radio>
                                 </b-form-radio-group>
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-col sm="4" v-if="specification.insurance === 'yes'"> 
+                    <b-col sm="4" v-if="specification.insurance === '1'"> 
                         <b-row>
                             <b-col cols="12">
                                 <label class="font-weight-bold">مدت بیمه</label>
@@ -297,37 +297,37 @@ export default {
                 ],
                 military:[
                     { value: null, text: 'انتخاب کنید' },
-                    { value: 'complete', text: 'اتمام خدمت'},
-                    { value: 'exempt', text: 'معاف'},
-                    { value: 'medical', text: 'معاف پزشکی'},
-                    { value: 'educational', text: 'معاف تحصیلی'},
+                    { value: 1, text: 'اتمام خدمت'},
+                    { value: 2, text: 'معاف'},
+                    { value: 3, text: 'معاف پزشکی'},
+                    { value: 4, text: 'معاف تحصیلی'},
                     { value: 'other', text: 'سایر'},
                 ],
                 residence:[
                     { value: null, text: 'انتخاب کنید' },
-                    { value: 'complete', text: 'دورشهر'},
-                    { value: 'exempt', text: 'عطاران'},
+                    { value: 1, text: 'دورشهر'},
+                    { value: 2, text: 'عطاران'},
                 ],
                 position:[
                     { value: null, text: 'انتخاب کنید' },
-                    { value: 'backend', text: 'برنامه نویس بک اند'},
-                    { value: 'frontend', text: 'برنامه نویس فرانت اند'},
+                    { value: 1, text: 'برنامه نویس بک اند'},
+                    { value: 2, text: 'برنامه نویس فرانت اند'},
                 ],
                 gender:[
                     { value: null, text: 'انتخاب کنید' },
-                    { value: 'man', text: 'مرد' },
-                    { value: 'woman', text: 'زن' }
+                    { value: 0, text: 'مرد' },
+                    { value: 1, text: 'زن' }
                 ],
                 knowVia:[
                     { value: null, text: 'انتخاب کنید' },
-                    { value: 'es', text: 'ای استخدام'},
-                    { value: 'jb', text: 'جابینجا'},
-                    { value: 'jb', text: 'دیوار'},
-                    { value: 'jb', text: 'سایت'},
-                    { value: 'jb', text: 'شبکه های اجتماعی'},
-                    { value: 'jb', text: 'معرف'},
-                    { value: 'jb', text: 'پیامک'},
-                    { value: 'others', text: 'سایر'}
+                    { value: 1, text: 'ای استخدام'},
+                    { value: 2, text: 'جابینجا'},
+                    { value: 3, text: 'دیوار'},
+                    { value: 4, text: 'سایت'},
+                    { value: 5, text: 'شبکه های اجتماعی'},
+                    { value: 6, text: 'معرف'},
+                    { value: 7, text: 'پیامک'},
+                    { value: 0, text: 'سایر'}
                 ]
             },
             specification:{
@@ -353,6 +353,11 @@ export default {
     },
     methods:{
         handleNextStep(){
+            if(this.specification.insurance == '1'){
+                this.specification.insurance === true
+            }else{
+                this.specification.insurance === false
+            }
             this.$store.dispatch('changeSpecification',this.specification)
             this.$emit('handleNextStep')
         }

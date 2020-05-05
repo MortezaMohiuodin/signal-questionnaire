@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+// import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -47,17 +47,13 @@ const store = new Vuex.Store({
         },
         changeFinalConfirm({commit},data){
             commit('changeFinalConfirm',data)
-        },
-        sendData({state}){
-            axios.post('http://employment.signalads.com/backend/api/employees', state.applicant)
-            .then(res => {
-                console.log(res)
-            }).catch(err=>console.log(err))
         }
+       
     },
-    
     getters:{
-
+        getApplicant(state){
+            return state.applicant
+        }
     }
 })
 export default store

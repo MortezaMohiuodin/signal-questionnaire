@@ -1,5 +1,9 @@
 <template>
   <div>
+    <loading :active.sync="isLoading" 
+    :is-full-page="true"
+    color="#019e93">
+    </loading>
     <ValidationObserver v-slot="{handleSubmit}">
         <div class="form-sections">
             <!-- Salary and rights -->
@@ -14,6 +18,9 @@
                             label="حداقل حقوق پیشنهادی (تومان)"
                             label-class="font-weight-bold">
                                 <b-form-input v-on:keyup="addComma(salary)" v-model="salary"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -69,18 +76,22 @@
 import ItemList from '@/components/ItemList.vue'
 import dialog from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/dist/sweetalert2.min.css';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     name: 'finalConfirm',
     components: {
-        ItemList
+        ItemList,
+        Loading
     },
     data(){
         return{
             advantages:[],
             salary:null,
             phoneNumber: '0919xxxxxxxx',
-            finalConfirm:null
+            finalConfirm:null,
+            isLoading:false
         }
             
     },
@@ -94,28 +105,42 @@ export default {
                 salary: this.salary
             }
             this.$store.dispatch('changeFinalConfirm',this.finalConfirm)
-            .then(
-                this.$store.dispatch('sendData')
-            ).then(res => {
-                console.log(res)
-                dialog.fire({
-                    title: 'پیام',
-                    text: 'اطلاعات با موفقیت ثبت شد',
-                    icon: 'success',
-                    confirmButtonText: 'خب',
-                    confirmButtonColor:'#1cc269'
+            this.sendData()
+        },
+        sendData(){
+            this.isLoading = true
+            let applicantData = this.$store.getters.getApplicant
+            console.log(applicantData)
+            this.$http.post('http://employment.signalads.com/backend/api/employees', applicantData)
+                .then(res => {
+                    this.isLoading = false
+                    console.log(res)
+                    dialog.fire({
+                        title: 'پیام',
+                        text: 'اطلاعات با موفقیت ثبت شد',
+                        icon: 'success',
+                        confirmButtonText: 'خب',
+                        confirmButtonColor:'#1cc269',
+                        onClose: () => {
+                             window.location.replace('http://localhost:8080/')
+                        }
+                    })
+                }).catch(err=>{
+                    this.isLoading = false
+                    console.log(err)
+                    dialog.fire({
+                        title: 'پیام',
+                        text: 'مشکلی در سرور پیش آمده است،لطفا بعدا تلاش فرمایید',
+                        icon: 'error',
+                        confirmButtonText: 'خب',
+                        confirmButtonColor:'#f27474',
+                    })
                 })
-            }).catch(err => {
-                console.log(err)
-            })
-            
-           
         },
         addComma(n){
             this.salary = n.replace(/\D/g, "")
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-
     }
 }
 </script>

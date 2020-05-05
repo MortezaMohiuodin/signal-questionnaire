@@ -3,7 +3,6 @@
     <ValidationObserver v-slot="{handleSubmit}">
 
         <div class="form-sections">
-
             <!-- Languages -->
             <div class="form-section">
                 <h5 class="form-title">زبان های خارجی</h5>
@@ -28,7 +27,7 @@
                         </ValidationProvider>
                     </b-col>
                     <b-col sm="4" 
-                    v-if="languages[i-1].language && languages[i-1].language.value === 'others'"> 
+                    v-if="languages[i-1].language == '0'"> 
                         <ValidationProvider rules="required" v-slot="{errors}" name="توضیح سایر">
                             <b-form-group
                             label="سایر"
@@ -38,38 +37,38 @@
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-row class="mx-0" v-if="languages[i-1].language">
-                        <b-col sm="3"> 
+                    <b-row class="mx-0" v-if="languages[i-1].language || languages[i-1].language == '0'">
+                        <b-col sm="3" class="mb-2"> 
                             <ValidationProvider rules="required" v-slot="{errors}" name="مهارت گفتاری"> 
                                 <div class="text-center mb-1" >مهارت گفتاری</div>
                                 <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languages[i-1].speaking"/>
-                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage2">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
-                        <b-col sm="3"> 
+                        <b-col sm="3" class="mb-2"> 
                             <ValidationProvider rules="required" v-slot="{errors}" name="مهارت شنیداری">
                                 <div class="text-center mb-1">مهارت شنیداری </div>
                                 <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languages[i-1].listening"/>
-                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage2">{{errors[0]}}</span>
                             </ValidationProvider>
-                        </b-col>
-                        <b-col sm="3"> 
+                        </b-col> 
+                        <b-col sm="3" class="mb-2"> 
                             <ValidationProvider rules="required" v-slot="{errors}" name="مهارت خواندن">
                                 <div class="text-center mb-1">مهارت خواندن</div>
                                 <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languages[i-1].reading"/>
-                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage2">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
-                        <b-col sm="3"> 
+                        <b-col sm="3" class="mb-2"> 
                             <ValidationProvider rules="required" v-slot="{errors}" name="مهارت نوشتاری">
                                 <div class="text-center mb-1">مهارت نوشتاری </div>
                                 <StarRating  v-bind:star-size="25" :show-rating="false" v-model="languages[i-1].writing"/>
-                                <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
+                                <span v-if="errors[0]" class="errMessage2">{{errors[0]}}</span>
                             </ValidationProvider>
                         </b-col>
                     </b-row>
                 </b-row>
-                <AddBtn v-on:addItem='addRow(languages)'/>
+                <AddBtn v-on:addItem='addRow(languages,language)'/>
             </div>
 
              <!-- Program skill -->
@@ -98,7 +97,6 @@
                 <hr>
                 <ItemList :items="skills"/>
             </div>
-
             <!-- File uploads -->
             <div class="form-section">
                 <h5 class="form-title">بارگذاری فایل ها</h5>
@@ -122,7 +120,7 @@
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-col sm="4" v-if="filesUpload[i].name === 'others'"> 
+                    <b-col sm="4" v-if="filesUpload[i].name == '0'"> 
                         <ValidationProvider rules="required" v-slot="{errors}">
                             <b-form-group
                             label="سایر"
@@ -132,7 +130,7 @@
                             </b-form-group>
                         </ValidationProvider>
                     </b-col>
-                    <b-col sm="4" v-if="filesUpload[i].name"> 
+                    <b-col sm="4" v-if="filesUpload[i].name || filesUpload[i].name == '0'"> 
                         <b-form-group
                         label="آپلود فایل"
                         label-class="font-weight-bold"
@@ -145,7 +143,7 @@
                         </b-form-group>
                     </b-col>
                 </b-row>
-                <AddBtn v-on:addItem='addRow(filesUpload)'/>
+                <AddBtn v-on:addItem='addRow(filesUpload,fileUpload)'/>
             </div>
         </div>
         
@@ -177,19 +175,23 @@ export default {
             options:{
               languages:[
                 { value: null, text: 'انتخاب کنید' },
-                { value: 'es', text: 'انگلیسی'},
-                { value: 'jb', text: 'عربی'},
-                { value: 'jb', text: 'چینی'},
-                { value: 'jb', text: 'فرانسوی'},
-                { value: 'jb', text: 'آلمانی'},
-                { value: 'jb', text: 'ترکی'},
-                { value: 'others', text: 'سایر'}
+                { value: 1, text: 'انگلیسی'},
+                { value: 2, text: 'عربی'},
+                { value: 3, text: 'چینی'},
+                { value: 4, text: 'فرانسوی'},
+                { value: 5, text: 'آلمانی'},
+                { value: 6, text: 'ترکی'},
+                { value: 0, text: 'سایر'}
               ],
               filesUpload:[
                 { value: null, text: 'انتخاب کنید' },
                 { value: 'resume', text: 'روزمه'},
-                { value: 'courses', text: 'دوره های آموزشی'},
-                { value: 'others', text: 'سایر'}
+                { value: 'course', text: 'دوره های آموزشی'},
+                { value: 'education', text: 'مدرک تحصیلی'},
+                { value: 'identification', text: 'مدرک شناسایی'},
+                { value: 'pro_course', text: 'دوره های تخصصی'},
+                { value: 'portfolio', text: 'نمونه کار'},
+                { value: 0, text: 'سایر'}
               ]
             },
             program_skills:[
@@ -199,16 +201,41 @@ export default {
                   { value: 'web', name:'وبگردی',checked:null,rating:null},
                   { value: 'network', name:'شبکه',checked:null,rating:null}
             ],
-            languages:[{}],
+            language:{
+                language:null,
+                language_other:null,
+                speaking:null,
+                listening:null,
+                writing:null,
+                reading:null
+            },
+            languages:[{
+                language:null,
+                language_other:null,
+                speaking:null,
+                listening:null,
+                writing:null,
+                reading:null
+            }],
             skills:[],
-            filesUpload:[{}],
+            fileUpload:{
+                name:null,
+                file_other:null,
+                file:null
+            },
+            filesUpload:[{
+                name:null,
+                file_other:null,
+                file:null
+            }],
             skillAbility:null
         }
             
     },
     methods:{
         handleNextStep(){
-            let selected_programs = this.program_skills.filter(item => {
+            let selected_programs = []
+            selected_programs = this.program_skills.filter(item => {
                 if(item.checked){
                     return item
                 }
@@ -225,8 +252,8 @@ export default {
         handlePrevStep(){
             this.$emit('handlePrevStep')
         },
-        addRow(array){
-            array.push({})
+        addRow(array,object){
+            array.push(object)
         },
         deleteRow(index,array){
             array.splice(index,1)

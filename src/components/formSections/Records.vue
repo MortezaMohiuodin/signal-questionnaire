@@ -19,15 +19,21 @@
                                 :options="options.degrees"
                                 :reduce="item => item.value">
                                 </v-select>
+                                 <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
                     </div>
-                    <div class="item-flex" v-if="educations[i-1].degree && educations[i-1].degree.value === 'others'"> 
+                    <div class="item-flex" v-if="educations[i-1].degree == '0'"> 
                         <ValidationProvider rules="required" v-slot="{errors}" name="توضیح سایر">
                             <b-form-group :class="{error:errors[0]}">
                                 <label class="font-weight-bold">سایر (سطح)</label>
                                 <b-form-input v-model="educations[i-1].degree_other"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -37,6 +43,9 @@
                             <b-form-group :class="{error:errors[0]}">
                                 <label class="font-weight-bold">رشته</label>
                                 <b-form-input v-model="educations[i-1].major"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -47,6 +56,9 @@
                                 <label class="font-weight-bold">دانشگاه</label>
                                 <span class="text-gray"> - اختیاری</span>
                                 <b-form-input v-model="educations[i-1].school"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -61,6 +73,9 @@
                                 :options="options.educationStatus"
                                 :reduce="item => item.value">
                                 </v-select>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -71,6 +86,9 @@
                                 <label class="font-weight-bold">معدل</label>
                                 <span class="text-gray"> - اختیاری</span>
                                 <b-form-input v-model="educations[i-1].score"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -81,7 +99,7 @@
                         </button>
                     </div>
                 </div>
-                <AddBtn v-on:addItem='addRow(educations)'/>
+                <AddBtn v-on:addItem='addRow(educations,education)'/>
             </div>
 
             <!-- Jobs records -->
@@ -90,10 +108,13 @@
                 <hr>
                 <div class="row-flex" v-for="i in jobs.length" v-bind:key="i">
                     <div class="item-flex"> 
-                        <ValidationProvider rules="required" v-slot="{errors}">
+                        <ValidationProvider rules="required" name="موسسه/مجموعه/شرکت" v-slot="{errors}">
                         <b-form-group :class="{error:errors[0]}">
                                 <label class="font-weight-bold">موسسه/مجموعه/شرکت</label>
                                 <b-form-input v-model="jobs[i-1].company_name" ></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -104,6 +125,9 @@
                                  <label class="font-weight-bold">سمت</label>
                                  <span class="text-gray"> - اختیاری</span>
                                 <b-form-input v-model="jobs[i-1].role"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -116,6 +140,9 @@
                                 v-on:keyup="addComma(i-1)" 
                                 v-model="jobs[i-1].salary">
                                 </b-form-input>                         
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -127,8 +154,12 @@
                                 <span class="text-gray"> - اختیاری</span>
                                 <VuePersianDatetimePicker 
                                 v-model="jobs[i-1].start_date"
+                                format="YYYY-MM"
                                 type="year-month">
                                 </VuePersianDatetimePicker>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -140,8 +171,12 @@
                                 <span class="text-gray"> - اختیاری</span>
                                 <VuePersianDatetimePicker 
                                 v-model="jobs[i-1].end_date"
+                                format="YYYY-MM"
                                 type="year-month">
                                 </VuePersianDatetimePicker> 
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -152,7 +187,7 @@
                         </button>
                     </div>
                 </div>
-                <AddBtn v-on:addItem='addRow(jobs)'/>
+                <AddBtn v-on:addItem='addRow(jobs,job)'/>
             </div>
 
              <!-- Courses -->
@@ -166,6 +201,9 @@
                                 <label class="font-weight-bold">دوره آموزشی</label>
                                 <span class="text-gray"> - اختیاری</span>
                                 <b-form-input v-model="courses[i-1].title" ></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -176,6 +214,9 @@
                                 <label class="font-weight-bold">موسسه/آموزشگاه</label>
                                 <span class="text-gray"> - اختیاری</span>
                                 <b-form-input v-model="courses[i-1].school"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -186,6 +227,9 @@
                                 <label class="font-weight-bold">مدت دوره (ماه)</label>
                                 <span class="text-gray"> - اختیاری</span>
                                 <b-form-input v-model="courses[i-1].course_duration"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -196,6 +240,9 @@
                                 <label class="font-weight-bold">عنوان مدرک</label>
                                 <span class="text-gray"> - اختیاری</span>
                                 <b-form-input v-model="courses[i-1].degree_name"></b-form-input>
+                                <span v-if="errors[0]" class="error_icon">
+                                    <v-icon scale="1.3" color="#e76767" name="exclamation-circle"/>
+                                </span>
                                 <span v-if="errors[0]" class="errMessage">{{errors[0]}}</span>
                             </b-form-group>
                         </ValidationProvider>
@@ -206,7 +253,7 @@
                         </button>
                     </div>
                 </div>
-                <AddBtn v-on:addItem='addRow(courses)'/>
+                <AddBtn v-on:addItem='addRow(courses,course)'/>
             </div>
 
         </div>
@@ -234,27 +281,61 @@ export default {
             options:{
                 degrees:[
                     { value: null, text: 'انتخاب کنید' },
-                    { value: 'es', text: 'دیپلم'},
-                    { value: 'jb', text: 'کاردانی'},
-                    { value: 'jb', text: 'کارشناسی'},
-                    { value: 'jb', text: 'کارشناسی ارشد'},
-                    { value: 'jb', text: 'دکترا'},
-                    { value: 'others', text: 'سایر'}
+                    { value: 1, text: 'دیپلم'},
+                    { value: 2, text: 'کاردانی'},
+                    { value: 3, text: 'کارشناسی'},
+                    { value: 4, text: 'کارشناسی ارشد'},
+                    { value: 5, text: 'دکترا'},
+                    { value: 0, text: 'سایر'}
                 ],
                 educationStatus:[
                     { value: null, text: 'انتخاب کنید' },
-                    { value: 'es', text: 'دانشجو'},
-                    { value: 'jb', text: 'فارغ التحصیل'},
-                ],
-                residence:[
-                    { value: null, text: 'انتخاب کنید' },
-                    { value: 'complete', text: 'دورشهر'},
-                    { value: 'exempt', text: 'عطاران'},
+                    { value: 1, text: 'دانشجو'},
+                    { value: 2, text: 'فارغ التحصیل'},
                 ],
             },
-            educations:[{}],
-            jobs:[{}],
-            courses:[{}],
+            education:{
+                degree:null,
+                educationStatus:null,
+                major:null,
+                school:null,
+                degree_other:null,
+                score:null
+            },
+            job:{
+                role:null,
+                company_name:null,
+                salary:null,
+                start_date:null,
+                end_date:null
+            },
+            course:{
+                title:null,
+                school:null,
+                course_duration:null,
+                degree_name:null
+            },
+            educations:[{
+                degree:null,
+                educationStatus:null,
+                major:null,
+                school:null,
+                degree_other:null,
+                score:null
+            }],
+            jobs:[{
+                role:null,
+                company_name:null,
+                salary:null,
+                start_date:null,
+                end_date:null
+            }],
+            courses:[{
+                title:null,
+                school:null,
+                course_duration:null,
+                degree_name:null
+            }],
             records:null
         }
             
@@ -272,8 +353,8 @@ export default {
         handlePrevStep(){
             this.$emit('handlePrevStep')
         },
-        addRow(array){
-            array.push({})
+        addRow(array,object){
+            array.push(object)
         },
         deleteRow(index,array){
             array.splice(index,1)
